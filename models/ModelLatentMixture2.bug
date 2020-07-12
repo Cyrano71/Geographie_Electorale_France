@@ -1,0 +1,39 @@
+model  {  
+ for (i in 1:N) {  
+     logit(p[i]) <-  min(999,max(-999,beta0 + U[i] +  V[i])) 
+     V[i] ~ dnorm(0, tau.V) 
+     z[i] ~ dbern(p[i])
+
+     psi[i] ~ dpois(mupsi[i]) 
+     mupsi[i] <- E[i] * thetapsi[i] * exp(alphapsi0)
+     thetapsi[i] ~ dgamma(alphapsi,alphapsi)
+
+     phi[i] ~ dpois(muphi[i]) 
+     muphi[i] <- E[i] * thetaphi[i] * exp(alphaphi0)
+     thetaphi[i] ~ dgamma(alphaphi,alphaphi)
+     
+     mu[i] <- equals(z[i],0)*psi[i] + equals(z[i],1)*phi[i]
+     Ypred[i] ~ dpois(mu[i]) 
+     Y[i] ~ dpois(mu[i]) 
+
+     PPL[i] <- pow(Ypred[i] - Y[i],2)
+ }  
+ alphaphi0 ~ dunif(-10,10)
+ alphapsi0 ~ dunif(-10,10)
+ alphaphi ~  dgamma(1,1) 
+ alphapsi ~  dgamma(1,1)  
+ beta0 ~ dnorm(0,1.0E-5)
+ tau.V ~ dgamma(1.0,1.0)
+
+for (k in 1:sumNumNeigh)
+{
+  weights[k] <- 1
+}
+ 
+U[1:N] ~ car.normal(adj[], weights[], num[], tau.U) 
+tau.U ~ dgamma(1.0,1.0) 
+
+} 
+
+ 
+ 

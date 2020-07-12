@@ -1,0 +1,28 @@
+model  {  
+ for (i in 1:N) {
+     Y[i,1] ~ dbern(p[i,1])
+     logit(p[i,1]) <- alpha0[1] + beta1[1] * SSum[i,1]
+
+     Ypred[i,1] ~ dbern(p[i,1])
+     diff[i,1] <- pow(Y[i,1] - Ypred[i,1],2)
+
+     for(j in 2:T){
+       Y[i,j] ~ dbern(p[i,j])
+       logit(p[i,j]) <- alpha0[j] + beta1[j] * SSum[i,j] + beta2[j] * SSum[i,(j-1)]
+
+       Ypred[i,j] ~ dbern(p[i,j])
+       diff[i,j] <- pow(Y[i,j] - Ypred[i,j],2)
+     }
+ }  
+
+ for(j in 1:T){
+    alpha0[j] ~ dflat()
+    beta1[j] ~ dnorm(0,0.1)
+    beta2[j] ~ dnorm(0,0.1)
+ }
+
+  mspe <- mean(diff[,])
+} 
+
+ 
+ 

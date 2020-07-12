@@ -1,0 +1,51 @@
+
+model{
+for (i in 1:n)
+{
+  Y[i] ~ dnorm(m1[i], taueps)
+  m1[i] <- E[i] * m[i]
+  m[i] <- inprod(beta[],X[i,]) + inprod(b[],Z[i,])
+}
+
+#Prior distributions of the random effects parameters
+for (k in 1:nknots)
+{
+  b[k] ~ dnorm(0,taub)
+}
+
+#Prior distribution of the fixed effects parameters
+for (l in 1:degree+1)
+{
+  beta[l] ~ dnorm(0,1.0E-6)
+}
+
+#Prior distributions of the precision parameters
+taueps~dgamma(0.1,0.1)
+taub~dgamma(0.1,0.1)
+
+#Construct the design matrix of fixed effects
+for (i in 1:n)
+{
+ for (l in 1:degree+1)
+ {
+   X[i,l] <- pow(Covariate[i],l-1)
+ }
+}
+
+#Construct the design matrix of random effects
+for (i in 1:n)
+{
+  for (k in 1:nknots)
+  {
+     u[i,k] <- (Covariate[i]-knot[k])*step(Covariate[i]-knot[k])
+     Z[i,k] <- pow(u[i,k],degree)
+  }
+}
+
+#Predicting new observations
+for(i in 1:n)
+{
+  epsilonstar[i]~dnorm(0,taueps)
+  ystar[i]<-m1[i]+epsilonstar[i]
+}
+} 

@@ -1,0 +1,16 @@
+model  {  
+ for (i in 1:N) {    
+     Y[i] ~ dbern(p[i])
+     p[i] <- lambda[i] / (1 + lambda[i])
+     lambda[i] <- (1 + exp((-1)*gam1*dis[i]))*exp(gam0 + v[i])
+
+     v[i] ~ dnorm(0,0.1)
+     res[i] <- (ind[i] - p[i]) / sqrt(p[i]*(1-p[i]))
+ } 
+ 
+ gam1 ~ dnorm(0,0.1)
+ gam0 ~ dnorm(0,0.1)
+} 
+
+ 
+ 

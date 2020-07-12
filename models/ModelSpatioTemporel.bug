@@ -1,0 +1,49 @@
+model  {  
+
+a[1:N] ~ dmnorm(ME[],SOM[,])
+
+for (i in 1:N) {  
+     ME[i] <- 0
+}  
+
+for (i in 1:N) {  
+   for (j in 1:N) {  
+     SOM[i,j] <- tau.a  * Cov.N[i,j] 
+  }
+} 
+
+tau.a ~ dgamma(1,1)
+
+b[1] <- max(-10, min(10, B[1]))
+b[2] <- max(-10, min(10, B[2] / T)) 
+
+B[1] ~ dnorm(0,tau.b)
+B[2] ~ dnorm(B[1],tau.b)
+tau.b ~ dgamma(1,1) 
+
+for(i in 1:N){
+  for(j in 1:T){
+     c[i,j] ~ dnorm(0,tau.c)
+  }
+}
+
+tau.c ~ dgamma(1,1) 
+
+for(i in 1:N){
+  for(j in 1:T){   
+     Y[i,j] ~ dpois(mu[i,j]) 
+     Ypred[i,j] ~ dpois(mu[i,j])  
+     PPL[i,j] <- pow(Ypred[i,j] - Y[i,j],2) 
+     mu[i,j] <- E[i,j] * theta1[i,j]
+     log(theta1[i,j]) <- theta[i,j]
+     theta[i,j] <- alpha0 + a[i] + b[j] + c[i,j]
+  }
+} 
+
+alpha0 ~ dnorm(0,tau.v)
+tau.v ~ dgamma(1,1) 
+#alpha0 <- log(alpha)
+} 
+
+ 
+ 

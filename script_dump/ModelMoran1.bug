@@ -1,0 +1,21 @@
+model  {  
+for (i in 1:N) {  
+
+NbDeVoix[i] ~ dpois(mu[i])  
+
+e[i] <- (NbDeVoix[i] - mu[i]) / sqrt(mu[i]) 
+estar[i] <- sum(we[startIndexCumAdj[i]:endIndexCumAdj[i],i])
+dt[i] <- e[i] * estar[i]
+db[i] <- pow(estar[i],2)
+
+}  
+
+for (i in 1:N) 
+{ 
+  for(j in startIndexCumAdj[i]:endIndexCumAdj[i]){
+      we[j,i] <- e[adj[j]]
+  }
+}
+
+rho <- sum(dt[]) / sum(db[])
+}

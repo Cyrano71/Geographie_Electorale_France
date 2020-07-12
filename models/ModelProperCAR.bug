@@ -1,0 +1,28 @@
+model  {  
+for (i in 1:N) {  
+   
+   Y[i] ~ dpois(mu[i])  
+   Ypred[i] ~ dpois(mu[i])   
+   PPL[i] <- pow(Ypred[i] - Y[i],2)
+   mu[i] <- min(50000, mu1[i])
+   mu1[i] <- E[i] * exp(theta[i])
+   theta[i] <-  beta0 + beta1 * Covariate[i] + V[i] + U[i]  
+   V[i] ~ dnorm(0, tau.v)
+}  
+
+#priors  
+beta0 ~ dflat()
+beta1 ~ dnorm(0, tau.beta)
+tau.beta ~ dgamma(1.0,1.0)
+tau.v ~ dgamma(1.0,1.0)
+
+U[1:N] ~ car.proper(theta[], C[], adj[], num[], M[], prec, gamma)  
+gamma.inf <- min.bound(C[],adj[],num[],M[])
+gamma.sup <- max.bound(C[],adj[],num[],M[])
+gamma ~ dunif(gamma.inf,gamma.sup)
+sdS ~ dunif(0,100)
+prec <- 1/pow(sdS,2)
+} 
+
+ 
+ 

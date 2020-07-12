@@ -1,0 +1,32 @@
+model  {  
+for (i in 1:N) {  
+    Y[i] ~ dpois(mu[i])
+    Ypred[i] ~ dpois(mu[i])    
+    log(mu[i]) <- log(E[i]) + beta0 +  V[i]
+    V[i] ~ dnorm(0, tau.V) 
+
+    PPL[i] <- pow(Ypred[i] - Y[i],2)
+
+    e[i] <- (Y[i] - mu[i]) / sqrt(mu[i]) 
+    estar[i] <- sum(we[startIndexCumAdj[i]:endIndexCumAdj[i],i])
+    dt[i] <- e[i] * estar[i]
+    db[i] <- pow(estar[i],2)
+}  
+
+for (i in 1:N) 
+{ 
+  for(j in startIndexCumAdj[i]:endIndexCumAdj[i]){
+      we[j,i] <- e[adj[j]]
+  }
+}
+
+rho <- sum(dt[]) / sum(db[])
+
+#Other priors  
+beta0 ~ dnorm(0,1.0E-5)
+theta <- exp(beta0)
+tau.V ~ dgamma(1.0,1.0)
+} 
+
+ 
+ 

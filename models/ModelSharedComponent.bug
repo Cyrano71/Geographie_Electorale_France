@@ -1,0 +1,33 @@
+model  {  
+for (i in 1:N) {  
+   
+    Y1[i] ~ dpois(mu1[i])  
+    Ypred[i] ~ dpois(mu1[i])  
+    PPL[i] <- pow(Ypred[i] - Y1[i],2)  
+    log(mu1[i]) <- log(E1[i]) + log(theta1[i])
+    log(theta1[i]) <- beta0 + W.Ind[i] + W.Shared[i]*delta
+
+    Y2[i] ~ dpois(mu2[i])  
+    log(mu2[i]) <- log(E2[i]) + log(theta2[i])
+    log(theta2[i]) <- beta1 + W.Shared[i] / delta
+}  
+
+beta0 ~ dnorm(0,1.0E-5)
+beta1 ~ dnorm(0,1.0E-5)
+delta <- exp(sdf)
+sdf ~ dnorm(0,5.88)
+
+for (k in 1:sumNumNeigh)
+{
+   weights[k] <- 1
+}
+
+W.Ind[1:N] ~ car.normal(adj[], weights[], num[], tau.Ind)  
+W.Shared[1:N] ~ car.normal(adj[], weights[], num[], tau.Shared)  
+
+tau.Ind ~ dgamma(1.0,1.0)
+tau.Shared ~ dgamma(1.0,1.0)
+} 
+
+ 
+ 

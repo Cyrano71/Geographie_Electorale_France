@@ -1,0 +1,32 @@
+model  {  
+
+for (i in 1:Nknot) {  
+     ME[i] <- 0
+ }  
+
+for (i in 1:Nknot) {  
+   for (j in 1:Nknot) {  
+     SOM[i,j] <- tauS  * CovarKnotKnot[i,j] 
+  }
+ } 
+
+gam[1:Nknot] ~ dmnorm(ME[],SOM[,])
+
+for (i in 1:N) {  
+
+     Y[i] ~ dpois(mu[i])
+     mu[i] <- E[i]*theta[i]
+     ssum[i] <- inprod(gam[],CovarPointKnot[i,])
+     log(theta[i]) <- alpha0 + alpha1 * xc[i] + alpha2 * yc[i] + ssum[i]
+ }  
+
+  alpha0 ~ dflat()
+  alpha1 ~ dnorm(0,0.0001)
+  alpha2 ~ dnorm(0,0.0001)
+
+  tauS ~ dgamma(.001,.001)
+  sigmaS <- 1/sqrt(tauS)  
+} 
+
+ 
+ 

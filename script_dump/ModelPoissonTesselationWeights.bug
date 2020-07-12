@@ -1,0 +1,19 @@
+model  {  
+ for (i in 1:N) {
+     
+     Y[i] ~ dpois(phi[i])
+     phi[i] <- - max(-100000, min(0, log(L[i])))
+     log(L[i]) <- log(lambda[i]) - w[i]*lambda[i]
+     lambda[i] <- lambda0[i] * lambda1[i]
+     lambda0[i] <- E[i]
+     lambda1[i] <- exp(gam0) * (1 + exp((-1)*gam1*dis[i]))
+
+     res[i] <- (1/w[i]) - E[i]*lambda[i]
+ } 
+
+ gam0 ~ dnorm(0,0.001)
+ gam1 ~ dunif(0,1) #dnorm(0,0.001) 
+} 
+
+ 
+ 

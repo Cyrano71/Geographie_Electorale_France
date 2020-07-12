@@ -1,0 +1,46 @@
+model  {   
+
+   for (i in 1:NbAggregates) { 
+      Y.aggregate[i] ~ dpois(mu.aggregate[i])
+      mu.aggregate[i] <- E.aggregate[i] * theta1.aggregate[i]
+      theta1.aggregate[i] <- min(theta.aggregate[i], 20)
+      theta.aggregate[i] <-  exp(alpha0.aggregate+ u.aggregate[i] + v.aggregate[i]) 
+      v.aggregate[i] ~ dnorm(0, tau.v.aggregate)
+   } 
+
+   alpha0.aggregate ~ dflat()
+   tau.v.aggregate ~ dgamma(1.0,1.0)
+
+   for (k in 1:sumNumNeigh.aggregate)
+   {
+      weights.aggregate[k] <- 1
+   }
+
+   u.aggregate[1:NbAggregates] ~ car.normal(adj.aggregate[], weights.aggregate[], num.aggregate[], tau.aggregate)  
+   tau.aggregate ~ dgamma(1.0,1.0)
+
+   for (i in 1:NbCommunes) { 
+      Y.commune[i] ~ dpois(mu.commune[i])
+      Ypred[i] ~ dpois(mu.commune[i])    
+      PPL[i] <- pow(Ypred[i] - Y.commune[i],2)
+      mu.commune[i] <- E.commune[i] * theta1.commune[i]
+      theta1.commune[i] <- min(theta.commune[i], 20)
+      theta.commune[i] <-  exp(alpha0.commune+ u.commune[i] + v.commune[i] + u.aggregate[indexCommune[i]] + v.aggregate[indexCommune[i]]) 
+      v.commune[i] ~ dnorm(0, tau.v.commune)
+   } 
+
+   tau.v.commune ~ dgamma(1.0,1.0)
+
+   alpha0.commune ~ dflat()
+
+   for (k in 1:sumNumNeigh.commune)
+   {
+      weights.commune[k] <- 1
+   }
+
+   u.commune[1:NbCommunes] ~ car.normal(adj.commune[], weights.commune[], num.commune[], tau.commune)  
+   tau.commune ~ dgamma(1.0,1.0)
+
+} 
+
+ 

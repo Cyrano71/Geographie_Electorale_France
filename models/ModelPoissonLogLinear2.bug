@@ -1,0 +1,23 @@
+model  {  
+
+for(i in 1:N) 
+{  
+	Y[i] ~ dpois(mu[i])  
+        Ypred[i] ~ dpois(mu[i]) 
+        PPL[i] <- pow(Ypred[i] - Y[i],2)
+	mu[i] <- E[i]*exp(beta0)*theta[i]
+	TR[i] <- exp(beta0)*theta[i]  
+	theta[i] ~ dgamma(alpha,alpha)
+        err[i] <- (Y[i] - mu[i]) / sqrt(mu[i])
+}  
+
+beta0 ~ dunif(-10,10)
+alpha ~ dgamma(1 ,1)
+
+#standard deviation
+sigma.theta <- sqrt(1/alpha)  
+exp.beta0 <- exp(beta0)  
+} 
+
+ 
+ 

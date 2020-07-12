@@ -1,0 +1,65 @@
+Model{
+#Likelihood
+    for (i in 1:NbCommunes){
+         for (k in 1:NbCandidates){
+             Y[i,k] ~ dpois(mu1[i,k])
+             Ypred[i,k] ~ dpois(mu1[i,k]) 
+             PPL[i,k] <- pow(Ypred[i,k] - Y[i,k],2) 
+             mu1[i,k] <- min(50000, mu[i,k])
+	       mu[i,k] <- E[i,k] * theta[i,k]
+             log(theta[i,k]) <- beta[k] + S[k,i] + U[i,k]
+          }
+
+          # Multivariate normal distribution
+	    U[i,1:NbCandidates] ~ dmnorm(mean[1:NbCandidates], tau[1:NbCandidates,1:NbCandidates])
+
+          # candidate specific relative risk 
+          rr1[i]<- exp(beta[1] + S[1,i] + U[i,1])
+          rr2[i]<- exp(beta[2] + S[2,i] + U[i,2])
+          rr3[i]<- exp(beta[3] + S[3,i] + U[i,3])
+    }
+              
+    # mean = 0
+    mean[1]<- 0.0
+    mean[2]<- 0.0
+    mean[3]<- 0.0
+    
+    df <- NbCandidates + 1
+    tau[1:NbCandidates,1:NbCandidates] ~ dwish(I[1:NbCandidates,1:NbCandidates],df)           
+            
+    # MV CAR prior for the spatial random effects
+    S[1:NbCandidates,1:NbCommunes] ~ mv.car(adj[],weights[],num[],omega[,])
+
+    for (t in 1:sumNumNeigh) {weights[t] <-1}
+              
+    # Other priors
+    for (k in 1:NbCandidates) {
+         beta[k] ~ dnorm(0,1.0E-4)
+    }
+
+    omega[1:NbCandidates,1:NbCandidates] ~ dwish(I[1:NbCandidates,1:NbCandidates],df) 
+
+    sigma2[1:NbCandidates,1:NbCandidates] <- inverse(omega[,])     
+
+    #Covariance matrix of MVCAR
+    sigma[1] <- sqrt(sigma2[1,1])               
+    sigma[2] <- sqrt(sigma2[2,2])
+    sigma[3] <- sqrt(sigma2[3,3])
+
+    corr1<- sigma2[1,2]/(sigma[1]*sigma[2])
+    corr2<- sigma2[1,3]/(sigma[1]*sigma[3])
+    corr3<- sigma2[2,3]/(sigma[2]*sigma[3])
+
+    sigma2.U[1:NbCandidates,1:NbCandidates] <- inverse(tau[,])   
+
+    # Covariance matrix of MV Normal
+    sigma.U[1]<-sqrt(sigma2.U[1,1])
+    sigma.U[2]<-sqrt(sigma2.U[2,2])
+    sigma.U[3]<-sqrt(sigma2.U[3,3])
+
+    corr.U1<-sigma2.U[1,2]/(sigma.U[1]*sigma.U[2])
+    corr.U2<-sigma2.U[1,3]/(sigma.U[1]*sigma.U[3])
+    corr.U4<-sigma2.U[2,3]/(sigma.U[2]*sigma.U[3])    
+}
+ 
+ 

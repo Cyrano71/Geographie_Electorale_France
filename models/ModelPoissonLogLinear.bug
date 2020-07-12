@@ -1,0 +1,21 @@
+model  {   
+
+   for (i in 1:N) { 
+      Y[i] ~ dpois(mu[i])
+      Ypred[i] ~ dpois(mu[i])   
+      PPL[i] <- pow(Ypred[i] - Y[i],2)
+      mu[i] <- min(50000, mu1[i])
+      log(mu1[i]) <- log(E[i]) + beta0 + beta1*Covariate1[i] + beta2*Covariate2[i]
+   } 
+
+   #Priors  
+   beta0 ~ dnorm(0,0.001)
+   beta1 ~ dnorm(0,0.001)  
+   beta2 ~ dnorm(0,0.001)  
+
+   base <- exp(beta0)   
+   RR1 <- exp(beta1)  
+   RR2 <- exp(beta2)
+} 
+
+ 

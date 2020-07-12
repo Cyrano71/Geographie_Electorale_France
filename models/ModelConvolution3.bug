@@ -1,0 +1,30 @@
+model  {  
+
+for (i in 1:N) {  
+    Y[i] ~ dpois(mu[i])
+    Ypred[i] ~ dpois(mu[i])    
+    log(mu[i]) <- log(E[i]) + beta0 + beta1 * Covariate[i] + V[i] + U[i]
+    V[i] ~ dnorm(0, tau.V) 
+
+    PPL[i] <- pow(Ypred[i] - Y[i],2)
+}  
+
+for (k in 1:sumNumNeigh)
+{
+   weights[k] <- 1
+}
+
+U[1:N] ~ car.normal(adj[], weights[], num[], tau.U)  
+
+#Other priors  
+beta0 ~ dnorm(0,1.0E-5)
+theta <- exp(beta0)
+beta1 ~ dnorm(0,tau.beta)
+
+tau.U ~ dgamma(1.0,1.0)
+tau.V ~ dgamma(1.0,1.0)
+tau.beta ~ dgamma(1.0,1.0)
+} 
+
+ 
+ 
