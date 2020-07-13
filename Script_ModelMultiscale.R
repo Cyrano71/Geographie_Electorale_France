@@ -21,8 +21,10 @@ vendee.coords <- coordinates(vendee.sp)
 vendee.id <- cut(vendee.coords[,1], quantile(vendee.coords[,1]), include.lowest=TRUE)
 vendee.union <- unionSpatialPolygons(vendee.sp, vendee.id)
 
+jpeg("ppl\\MultiscaleSpatialPolygons.jpg", width = 850, height = 850)
 plot(vendee.sp)
 plot(vendee.union, add = TRUE, border = "red", lwd = 2)
+dev.off()
 
 indexCommune <- as.numeric(as.factor(vendee.id))
 NbAggregates <- nlevels(vendee.id)
@@ -74,4 +76,12 @@ bugs.directory=bugsdir, codaPkg=F, debug=T)
 source("utils\\computeGoodnessOfFit.R")
 fit.mspe <- computeMspe(samples$sims.list$PPL)
 fit.waic <- computeWaicPoisson(data$Y.commune, samples$sims.list$mu)
+
+vendee.sf$PPL <- sqrt(colMeans(samples$sims.list$PPL))
+
+library(tmap)
+jpeg("ppl\\MultiscalePPL.jpg", width = 850, height = 850)
+tmap_mode('plot') + tm_shape(vendee.sf) + 
+tm_polygons('PPL', title = "PPL", palette ="Oranges", breaks = c(0, 20, 50, 100, 200, 500, 900, 1000, 1100, 1200)) 
+dev.off()
 

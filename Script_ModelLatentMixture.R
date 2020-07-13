@@ -55,7 +55,7 @@ vendee.sf$PPL <- sqrt(colMeans(samples$sims.list$PPL))
 library(tmap)
 jpeg("ppl\\LatentMixturePPL.jpg", width = 850, height = 850)
 tmap_mode('plot') + tm_shape(vendee.sf) + 
-tm_polygons('PPL', title = "PPL", palette ="Oranges") 
+tm_polygons('PPL', title = "PPL", palette ="Oranges", breaks = c(0, 20, 50, 100, 200, 500, 900, 1000, 1100, 1200)) 
 dev.off()
 
 tmap_mode('view') + tm_shape(vendee.sf) + 

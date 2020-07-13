@@ -73,17 +73,32 @@ Le paramètre Theta est le coeur de l'étude et peut être modélisé de différ
 
 Pour chaque modèle on trouvera un script correspondant. Le script met en forme les données, calcule tout ce qui est nécessaire au modèle et appelle WinBugs pour
 lancer l'analyse bayésienne.
-A la fin de chaque script le "mean squared predictive error (MSPE)" et le "widely applicable information criterion (WAIC)" sont calculés. 
+À la fin de chaque script le "mean squared predictive error (MSPE)" et le "widely applicable information criterion (WAIC)" sont calculés. 
 
 ## PPL
 
+1) Modèle Poisson Log Linéaire
 
-1) LatentMixture Modèle
+Modèle classique peu performant
+
+![alt text](ppl/PoissonLogLinearPPL.jpg "Modèle Poisson Log Linéaire")
+
+2) Modèle Latent Mixture 
 
 La classification en groupes non observés du vote Macron au 2eme tour de la présidentielle de 2017 n'a pas été concluante dans la mesure où la victoire de Macron a été écrasente.
 En revanche la modélisation de Theta par une distribution gamma a eu un gros impact sur les perfomances du modèle comme on peut le voir sur le graphique du "posterior predictive loss"
 
-![alt text](ppl/LatentMixturePPL.jpg "Latent Mixture Model")
+![alt text](ppl/LatentMixturePPL.jpg "Modèle Latent Mixture ")
+
+3) Modèle Multiscale
+
+L'approche multi-échelle est très intéressante, elle permet de modéliser l'intéraction entre le niveau micro et macro :
+
+![alt text](ppl/MultiscaleSpatialPolygons.jpg "Approche multi-échelle")
+
+À approfondir, le résultat PPL est :
+
+![alt text](ppl/MultiscalePPL.jpg "Approche multi-échelle")
 
 ## Références
 

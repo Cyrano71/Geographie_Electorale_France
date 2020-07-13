@@ -41,17 +41,15 @@ source("utils\\computeGoodnessOfFit.R")
 fit.mspe <- computeMspe(samples$sims.list$PPL)
 fit.waic <- computeWaicPoisson(data$Y, samples$sims.list$mu)
 
-hist(samples$sims.list$base)
-hist(samples$sims.list$RR1)
-hist(samples$sims.list$pred)
+vendee.sf$PPL <- sqrt(colMeans(samples$sims.list$PPL))
 
-resid <- data$NbDeVoix - samples$mean$pred
-resid.shades <- shading(c(-2,2),c("red","grey","blue"))
+library(tmap)
+jpeg("ppl\\PoissonLogLinearPPL.jpg", width = 850, height = 850)
+tmap_mode('plot') + tm_shape(vendee.sf) + 
+tm_polygons('PPL', title = "PPL", palette ="Oranges", breaks = c(0, 20, 50, 100, 200, 500, 900, 1000, 1100, 1200)) 
+dev.off()
 
-# -2 = red = data$NbDeVoix < samples$mean$pred
-#  2 = blue = data$NbDeVoix > samples$mean$pred
-
-choropleth(as(vendee.sf,"Spatial"), resid, resid.shades)
+hist(vendee.sf$PPL)
 
 
 
