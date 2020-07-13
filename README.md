@@ -20,14 +20,14 @@ Les tableaux qui ont été utilisés pour cette étude :
 Les données utilisées pour les variables dépendantes viennent de data.gouv.
 
 Les tableaux qui ont été utilisés sont :
-- Presidentielle2012ResultatsCommunesTour1Tour2
-- Presidentielle2017ResultatsCommunesTour1
-- Presidentielle2017ResultatsCommunesTour2
+- Presidentielle2012ResultatsCommunesTour1Tour2.xlsx
+- Presidentielle2017ResultatsCommunesTour1.xlsx
+- Presidentielle2017ResultatsCommunesTour2.xlsx
 
-Les données Presidentielle2012ResultatsCommunesTour1Tour2 ont dû être transformées pour 
+Les données Presidentielle2012ResultatsCommunesTour1Tour2.xlsx ont dû être transformées pour 
 obtenir un fichier avec pour chaque colonne les résultats d'un seul candidat.
-La fonction utilisée pour cette transformation est dans le fichier Transformer_Presidentielle2017ResultatsCommunesTour1_ParCandidat.
-Le résultat est le fichier Presidentielle2017ResultatsCommunesParCandidatTour1
+La fonction utilisée pour cette transformation est dans le fichier Transformer_Presidentielle2017ResultatsCommunesTour1_ParCandidat.txt.
+Le résultat est le fichier Presidentielle2017ResultatsCommunesParCandidatTour1.xlsx
 
 ## Dossier shapefile 
 
@@ -75,20 +75,20 @@ Pour chaque modèle on trouvera un script correspondant. Le script met en forme 
 lancer l'analyse bayésienne.
 À la fin de chaque script le "mean squared predictive error (MSPE)" et le "widely applicable information criterion (WAIC)" sont calculés. 
 
-## PPL
+## Erreurs Prédictives Postérieures EPP
 
 1) Modèle Poisson Log Linéaire
 
 Modèle classique peu performant
 
-![alt text](ppl/PoissonLogLinearPPL.jpg "Modèle Poisson Log Linéaire")
+![alt text](ppl/PoissonLogLinearPPL.jpg "EPP : Modèle Poisson Log Linéaire")
 
 2) Modèle Latent Mixture 
 
 La classification en groupes non observés du vote Macron au 2eme tour de la présidentielle de 2017 n'a pas été concluante dans la mesure où la victoire de Macron a été écrasente.
-En revanche la modélisation de Theta par une distribution gamma a eu un gros impact sur les perfomances du modèle comme on peut le voir sur le graphique du "posterior predictive loss"
+En revanche la modélisation de Theta par une distribution gamma a eu un gros impact sur les perfomances du modèle comme on peut le voir sur le graphique des erreurs prédictives :
 
-![alt text](ppl/LatentMixturePPL.jpg "Modèle Latent Mixture ")
+![alt text](ppl/LatentMixturePPL.jpg "EPP: Modèle Latent Mixture ")
 
 3) Modèle Multiscale
 
@@ -96,9 +96,16 @@ L'approche multi-échelle est très intéressante, elle permet de modéliser l'i
 
 ![alt text](ppl/MultiscaleSpatialPolygons.jpg "Approche multi-échelle")
 
-À approfondir, le résultat PPL est :
+À approfondir, le graphique des erreurs prédictives est :
 
-![alt text](ppl/MultiscalePPL.jpg "Approche multi-échelle")
+![alt text](ppl/MultiscalePPL.jpg "EPP: Modèle multi-échelle")
+
+4) Modèle multi-variable 
+
+L'idée est de modéliser l'intéraction entre le vote Macron ,LePen et Fillon au 1er tour de l'élection présidentielle de 2017 sur le département de la vendée.
+Pour Fillon la distribution des erreurs prédictives est :
+
+![alt text](ppl/MultiscalePPL.jpg "EPP: Modèle multi-variable Fillon")
 
 ## Références
 
