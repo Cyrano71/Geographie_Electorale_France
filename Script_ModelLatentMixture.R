@@ -50,10 +50,16 @@ fit.mspe <- computeMspe(samples$sims.list$PPL)
 fit.waic <- computeWaicPoisson(data$Y, samples$sims.list$mu)
 
 vendee.sf$z <- colMeans(samples$sims.list$z)
+vendee.sf$PPL <- sqrt(colMeans(samples$sims.list$PPL))
 
 library(tmap)
+jpeg("ppl\\LatentMixturePPL.jpg", width = 850, height = 850)
+tmap_mode('plot') + tm_shape(vendee.sf) + 
+tm_polygons('PPL', title = "PPL", palette ="Oranges") 
+dev.off()
+
 tmap_mode('view') + tm_shape(vendee.sf) + 
-tm_polygons('z', title = "z", palette ="Oranges") +
+tm_polygons('PPL', title = "PPL", palette ="Oranges") +
 tm_text("nom", size = 0.5)
 
 tmap_mode('view') + tm_shape(vendee.sf) + 

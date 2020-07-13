@@ -3,12 +3,13 @@ model  {
    for (i in 1:NbAggregates) { 
       Y.aggregate[i] ~ dpois(mu.aggregate[i])
       mu.aggregate[i] <- E.aggregate[i] * theta1.aggregate[i]
-      theta1.aggregate[i] <- min(theta.aggregate[i], 20)
+      theta1.aggregate[i] <- theta.aggregate[i]
       theta.aggregate[i] <-  exp(alpha0.aggregate+ u.aggregate[i] + v.aggregate[i]) 
       v.aggregate[i] ~ dnorm(0, tau.v.aggregate)
    } 
 
-   alpha0.aggregate ~ dflat()
+   alpha0.aggregate ~ dnorm(0,tau.alpha0.aggregate)
+   tau.alpha0.aggregate ~ dgamma(1,1) 
    tau.v.aggregate ~ dgamma(1.0,1.0)
 
    for (k in 1:sumNumNeigh.aggregate)
@@ -17,7 +18,7 @@ model  {
    }
 
    u.aggregate[1:NbAggregates] ~ car.normal(adj.aggregate[], weights.aggregate[], num.aggregate[], tau.aggregate)  
-   tau.aggregate ~ dgamma(1.0,1.0)
+   tau.aggregate ~ dgamma(1,1) 
 
    for (i in 1:NbCommunes) { 
       Y.commune[i] ~ dpois(mu.commune[i])
@@ -25,13 +26,14 @@ model  {
       PPL[i] <- pow(Ypred[i] - Y.commune[i],2)
       mu.commune[i] <- E.commune[i] * theta1.commune[i]
       theta1.commune[i] <- min(theta.commune[i], 20)
-      theta.commune[i] <-  exp(alpha0.commune+ u.commune[i] + v.commune[i] + u.aggregate[indexCommune[i]] + v.aggregate[indexCommune[i]]) 
+      theta.commune[i] <-  exp(alpha0.commune + u.commune[i] + v.commune[i] + u.aggregate[indexCommune[i]] + v.aggregate[indexCommune[i]]) 
       v.commune[i] ~ dnorm(0, tau.v.commune)
    } 
 
    tau.v.commune ~ dgamma(1.0,1.0)
 
-   alpha0.commune ~ dflat()
+   alpha0.commune ~ dnorm(0,tau.alpha0.commune)
+   tau.alpha0.commune ~ dgamma(1,1) 
 
    for (k in 1:sumNumNeigh.commune)
    {
@@ -39,7 +41,7 @@ model  {
    }
 
    u.commune[1:NbCommunes] ~ car.normal(adj.commune[], weights.commune[], num.commune[], tau.commune)  
-   tau.commune ~ dgamma(1.0,1.0)
+   tau.commune ~ dgamma(1,1) 
 
 } 
 

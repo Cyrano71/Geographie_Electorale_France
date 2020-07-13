@@ -68,27 +68,17 @@ if(model.id == 1){
                   ) 
 }
 
-if(model.id == 1){
-    myinits <- list(list(beta0 = 0), 
+myinits <- list(list(beta0 = 0), 
                  list(beta0 = 0)) 
-}else {
-    myinits <- list(list(beta0 = 0)) 
-}
 
 parameters <- c("mu","PPL")
 
 model.name <- paste0("/models/ModelLongitudinale",model.id,".bug") 
 model.path <- paste0(getwd(),model.name)
 
-if(model.id == 1){
-      samples <- bugs(data,parameters,inits=myinits , model.file = model.path, 
+samples <- bugs(data,parameters,inits=myinits , model.file = model.path, 
                       n.chains=2,n.iter=10000, n.burnin=2500, n.thin=2, DIC=T, 
                       bugs.directory=bugsdir, codaPkg=F, debug=T)
-} else{
-      samples <- bugs(data,parameters,inits=myinits , model.file = model.path, 
-                      n.chains=1,n.iter=10000, n.burnin=2500, n.thin=2, DIC=T, 
-                      bugs.directory=bugsdir, codaPkg=F, debug=T)
-}
 
 source("utils\\computeGoodnessOfFit.R")
 fit1.mspe <- computeMspe(samples$sims.list$PPL[,,1])

@@ -75,6 +75,16 @@ Pour chaque modèle on trouvera un script correspondant. Le script met en forme 
 lancer l'analyse bayésienne.
 A la fin de chaque script le "mean squared predictive error (MSPE)" et le "widely applicable information criterion (WAIC)" sont calculés. 
 
+## PPL
+
+
+1) LatentMixture Modèle
+
+La classification en groupes non observés du vote Macron au 2eme tour de la présidentielle de 2017 n'a pas été concluante dans la mesure où la victoire de Macron a été écrasente.
+En revanche la modélisation de Theta par une distribution gamma a eu un gros impact sur les perfomances du modèle comme on peut le voir sur le graphique du "posterior predictive loss"
+
+![alt text](ppl/LatentMixturePPL.jpg "Latent Mixture Model")
+
 ## Références
 
 - Bayesian Disease Mapping: Hierarchical Modeling in Spatial Epidemiology de Andrew B. Lawson
