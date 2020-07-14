@@ -81,31 +81,31 @@ lancer l'analyse bayésienne.
 
 Modèle classique peu performant
 
-![alt text](ppl/PoissonLogLinearPPL.jpg "EPP : Modèle Poisson Log Linéaire")
+![alt text](ppl/PoissonLogLinearPPL.jpg)
 
 2) Modèle Latent Mixture 
 
 La classification en groupes non observés du vote Macron et Lepen au 2eme tour de la présidentielle de 2017 n'a pas été concluante. Le modèle n'arrive pas à bien distingué entre un vote Lepen et un vote Macron.
 Les erreurs prédictives pour le vote Lepen sont :
 
-![alt text](ppl/LatentMixturePPL.jpg "EPP: Modèle Latent Mixture ")
+![alt text](ppl/LatentMixturePPL.jpg)
 
 3) Modèle Multiscale
 
 L'approche multi-échelle est très intéressante, elle permet de modéliser l'intéraction entre le niveau micro et macro :
 
-![alt text](ppl/MultiscaleSpatialPolygons.jpg "Approche multi-échelle")
+![alt text](ppl/MultiscaleSpatialPolygons.jpg)
 
 À approfondir, le graphique des erreurs prédictives est :
 
-![alt text](ppl/MultiscalePPL.jpg "EPP: Modèle multi-échelle")
+![alt text](ppl/MultiscalePPL.jpg)
 
 4) Modèle multi-variable 
 
 L'idée est de modéliser l'intéraction entre le vote Macron ,LePen et Fillon au 1er tour de l'élection présidentielle de 2017 sur le département de la vendée.
 Pour Fillon la distribution des erreurs prédictives est :
 
-![alt text](ppl/MultiscalePPL.jpg "EPP: Modèle multi-variable Fillon")
+![alt text](ppl/MultiscalePPL.jpg)
 
 ## Références
 
