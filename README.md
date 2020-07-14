@@ -105,7 +105,7 @@ L'approche multi-échelle est très intéressante, elle permet de modéliser l'i
 L'idée est de modéliser l'intéraction entre le vote Macron ,LePen et Fillon au 1er tour de l'élection présidentielle de 2017 sur le département de la vendée.
 Pour Fillon la distribution des erreurs prédictives est :
 
-![alt text](ppl/MultiscalePPL.jpg)
+![alt text](ppl/MultivariateCARPPL.jpg)
 
 ## Références
 
