@@ -107,6 +107,22 @@ Pour Fillon la distribution des erreurs prédictives est :
 
 ![alt text](ppl/MultivariateCARPPL.jpg)
 
+5) Modèle avec matrice de covariance spatiale
+
+Approche très intéressante qui modélise l'interaction entre les communes par une matrice de covariance spatiale. La formule utilisée pour construire la matrice est :
+
+covariance <- function(a){
+ return (exp((-1)*abs(a)))
+}
+
+avec "a" la distance euclidienne entre deux communes.
+
+Les erreurs de prédictions postérieures sont importantes comme le montre le graphique suivant :
+
+![alt text](ppl/SpatioTemporelMatriceCovarianceDistancePPL.jpg)
+
+=> À améliorer
+
 ## Références
 
 - Bayesian Disease Mapping: Hierarchical Modeling in Spatial Epidemiology de Andrew B. Lawson

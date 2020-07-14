@@ -1,48 +1,34 @@
 model  {  
 
-a[1:N] ~ dmnorm(ME[],SOM[,])
-
-for (i in 1:N) {  
-     ME[i] <- 0
-}  
-
-for (i in 1:N) {  
-   for (j in 1:N) {  
-     SOM[i,j] <- tau.a  * Cov.N[i,j] 
-  }
-} 
-
-tau.a ~ dgamma(1,1)
-
-b[1] <- max(-10, min(10, B[1]))
-b[2] <- max(-10, min(10, B[2] / T)) 
-
-B[1] ~ dnorm(0,tau.b)
-B[2] ~ dnorm(B[1],tau.b)
-tau.b ~ dgamma(1,1) 
-
 for(i in 1:N){
   for(j in 1:T){
-     c[i,j] ~ dnorm(0,tau.c)
-  }
-}
-
-tau.c ~ dgamma(1,1) 
-
-for(i in 1:N){
-  for(j in 1:T){   
-     Y[i,j] ~ dpois(mu[i,j]) 
-     Ypred[i,j] ~ dpois(mu[i,j])  
+     Y[i,j] ~ dbin(p[i,j],Size[i,j])
+     Ypred[i,j] ~ dbin(p[i,j],Size[i,j]) 
      PPL[i,j] <- pow(Ypred[i,j] - Y[i,j],2) 
-     mu[i,j] <- E[i,j] * theta1[i,j]
-     log(theta1[i,j]) <- theta[i,j]
-     theta[i,j] <- alpha0 + a[i] + b[j] + c[i,j]
+     logit(p[i,j]) <- alpha0 + v[i] + g[j] + psi[i,j]
   }
+  v[i] ~ dnorm(0,tau.v)
+  psi[i,1] ~ dnorm(0, tau.psi)
+  psi[i,2] ~ dnorm(psi[i,1], tau.psi)
 } 
 
-alpha0 ~ dnorm(0,tau.v)
-tau.v ~ dgamma(1,1) 
-#alpha0 <- log(alpha)
+tau.psi ~ dgamma(1,1) 
+
+g[1] ~ dnorm(0,tau.g)
+g[2] ~ dnorm(g[1],tau.g)
+tau.g ~ dgamma(1,1) 
+
+for (k in 1:sumNumNeigh)
+{
+   weights[k] <- 1
+}
+
+u[1:N] ~ car.normal(adj[], weights[], num[], tau.u)
+
+tau.v ~ dgamma(1,1)
+tau.u ~ dgamma(1.0,1.0)
+alpha0 ~ dnorm(0,tau.alpha)
+tau.alpha ~ dgamma(1,1) 
 } 
 
  

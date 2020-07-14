@@ -16,19 +16,33 @@ vendee.sf[vendee.sf$insee == 85214,]$NbVotes.Realises.Macron.2017.Tour2 = NA
 nb <- length(vendee.sf$NbVotes.Attendus.Macron.2017.Tour2)
 maximum <- max(vendee.sf$NbVotes.Attendus.Macron.2017.Tour2)
 
-data <- list(N = nb,
-Y = vendee.sf$NbVotes.Realises.Macron.2017.Tour2,
-E = vendee.sf$NbVotes.Attendus.Macron.2017.Tour2,
-Covariate1 = (vendee.sf$IMMI.TOTAL.2016 - mean(vendee.sf$IMMI.TOTAL.2016)) / sd(vendee.sf$IMMI.TOTAL.2016),
-Covariate2 = (vendee.sf$CHOMAGE.TOTAL.2016 - mean(vendee.sf$CHOMAGE.TOTAL.2016)) / sd(vendee.sf$CHOMAGE.TOTAL.2016)
-) 
+model.id <- 2
 
-myinits <- list(list(beta0 = 0, beta1 = 0, beta2 = 0), 
+if(model.id == 1){
+   data <- list(N = nb,
+                Y = vendee.sf$NbVotes.Realises.Macron.2017.Tour2,
+                E = vendee.sf$NbVotes.Attendus.Macron.2017.Tour2,
+                Covariate1 = (vendee.sf$IMMI.TOTAL.2016 - mean(vendee.sf$IMMI.TOTAL.2016)) / sd(vendee.sf$IMMI.TOTAL.2016),
+                Covariate2 = (vendee.sf$CHOMAGE.TOTAL.2016 - mean(vendee.sf$CHOMAGE.TOTAL.2016)) / sd(vendee.sf$CHOMAGE.TOTAL.2016)
+                ) 
+
+    myinits <- list(list(beta0 = 0, beta1 = 0, beta2 = 0), 
                  list(beta0 = 1, beta1 = 1, beta2 = 1)) 
+} else {
+   data <- list(N = nb,
+                Y = vendee.sf$NbVotes.Realises.Macron.2017.Tour2,
+                E = vendee.sf$NbVotes.Attendus.Macron.2017.Tour2
+                ) 
+
+    myinits <- list(list(beta0=0.5, alpha=0.7, theta=rep(0.5,nb)), 
+                 list(beta0=0.7, alpha=0.7, theta=rep(0.5,nb))
+                ) 
+}
 
 parameters <- c("mu","PPL")
 
-model.path <- paste0(getwd(),"/models/ModelPoissonLogLinear.bug")
+model.name <- paste0("/models/ModelPoissonLogLinear",model.id,".bug") 
+model.path <- paste0(getwd(),model.name)
 
 samples <- bugs(data,parameters,inits=myinits , model.file = model.path, 
  n.chains=2,n.iter=10000, n.burnin=2500, n.thin=2, DIC=T, 
