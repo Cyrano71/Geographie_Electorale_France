@@ -85,7 +85,7 @@ Modèle classique peu performant
 
 2) Modèle Latent Mixture 
 
-La classification en groupes non observés du vote Macron et Lepen au 2eme tour de la présidentielle de 2017 n'a pas été concluante. Le modèle n'arrive pas à bien distingué entre un vote Lepen et un vote Macron.
+La classification en groupes du vote Macron et Lepen au 2eme tour de la présidentielle de 2017 peut être intéressante.
 Les erreurs prédictives pour le vote Lepen sont :
 
 ![alt text](ppl/LatentMixturePPL.jpg)
