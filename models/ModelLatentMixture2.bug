@@ -1,29 +1,36 @@
 model  {  
- for (i in 1:N) {  
-     logit(p[i]) <-  min(999,max(-999,beta0 + U[i] +  V[i])) 
-     V[i] ~ dnorm(0, tau.V) 
-     z[i] ~ dbern(p[i])
+ for (i in 1:N) { 
+      V[i] ~ dnorm(0, tau.V)  
+      for(j in 1:2){
+         psi[i,j] ~ dpois(mu.psi[i,j])
+         mu.psi[i,j] <- min(20000,E[i,j] * theta.psi[i,j] * exp(alpha.psi0[j]))
+         theta.psi[i,j] ~ dgamma(0.5,1)
 
-     psi[i] ~ dpois(mupsi[i]) 
-     mupsi[i] <- E[i] * thetapsi[i] * exp(alphapsi0)
-     thetapsi[i] ~ dgamma(alphapsi,alphapsi)
+         phi[i,j] ~ dpois(mu.phi[i,j]) 
+         mu.phi[i,j] <- min(20000, E[i,j] * theta.phi[i,j] * exp(alpha.phi0[j]))
+         theta.phi[i,j] ~ dgamma(0.5,1)
 
-     phi[i] ~ dpois(muphi[i]) 
-     muphi[i] <- E[i] * thetaphi[i] * exp(alphaphi0)
-     thetaphi[i] ~ dgamma(alphaphi,alphaphi)
-     
-     mu[i] <- equals(z[i],0)*psi[i] + equals(z[i],1)*phi[i]
-     Ypred[i] ~ dpois(mu[i]) 
-     Y[i] ~ dpois(mu[i]) 
+         mu1[i,j] <- equals(z[j],0)*psi[i,j] + equals(z[j],1)*phi[i,j]
+         mu[i,j] <- mu1[i,j] * exp(U[i] + V[i])
+         Ypred[i,j] ~ dpois(mu[i,j]) 
+         Y[i,j] ~ dpois(mu[i,j]) 
 
-     PPL[i] <- pow(Ypred[i] - Y[i],2)
+         PPL[i,j] <- pow(Ypred[i,j] - Y[i,j],2)
+     }
  }  
- alphaphi0 ~ dunif(-10,10)
- alphapsi0 ~ dunif(-10,10)
- alphaphi ~  dgamma(1,1) 
- alphapsi ~  dgamma(1,1)  
- beta0 ~ dnorm(0,1.0E-5)
- tau.V ~ dgamma(1.0,1.0)
+
+tau.V ~ dgamma(1.0,1.0)
+
+for(j in 1:2){
+  beta0[j] ~ dnorm(0,tau.beta01[j])
+  tau.beta01[j] ~  dgamma(1,1) 
+
+  logit(p[j]) <- min(999,max(-999,beta0[j])) 
+  z[j] ~ dbern(p[j])
+
+  alpha.psi0[j]  ~ dunif(0,10) 
+  alpha.phi0[j] ~ dunif(0,10)
+}
 
 for (k in 1:sumNumNeigh)
 {

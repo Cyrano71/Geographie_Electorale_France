@@ -85,8 +85,8 @@ Modèle classique peu performant
 
 2) Modèle Latent Mixture 
 
-La classification en groupes non observés du vote Macron au 2eme tour de la présidentielle de 2017 n'a pas été concluante dans la mesure où la victoire de Macron a été écrasente.
-En revanche la modélisation de Theta par une distribution gamma a eu un gros impact sur les perfomances du modèle comme on peut le voir sur le graphique des erreurs prédictives :
+La classification en groupes non observés du vote Macron et Lepen au 2eme tour de la présidentielle de 2017 n'a pas été concluante. Le modèle n'arrive pas à bien distingué entre un vote Lepen et un vote Macron.
+Les erreurs prédictives pour le vote Lepen sont :
 
 ![alt text](ppl/LatentMixturePPL.jpg "EPP: Modèle Latent Mixture ")
 

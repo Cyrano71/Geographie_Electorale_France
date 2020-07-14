@@ -78,6 +78,6 @@ vendee.sf$PPL.Fillon <- sqrt(colMeans(samples$sims.list$PPL[,,2]))
 library(tmap)
 jpeg("ppl\\MultivariateCARPPL.jpg", width = 850, height = 850)
 tmap_mode('plot') + tm_shape(vendee.sf) + 
-tm_polygons('PPL.Fillon', title = "PPL", palette ="Oranges", breaks = c(0, 20, 50, 100, 200, 500, 900, 1000, 1100, 1200)) 
+tm_polygons('PPL.Fillon', title = "PPL", palette ="Oranges", breaks = c(0, 20, 40, 60, 80, 100, 130, 200, 300, 400)) 
 dev.off()
 
