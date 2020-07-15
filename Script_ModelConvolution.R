@@ -35,7 +35,7 @@ for (i in 1:N){
   endIndexCumAdj[i] <- cum[i+1]
 }
 
-model.id <- 3
+model.id <- 2
 
 if(model.id == 1){
    
@@ -80,3 +80,13 @@ source("utils\\computeGoodnessOfFit.R")
 fit.mspe <- computeMspe(samples$sims.list$PPL)
 fit.waic <- computeWaicPoisson(data$Y, samples$sims.list$mu)
 
+vendee.sf$PPL <- sqrt(colMeans(samples$sims.list$PPL))
+
+library(tmap)
+
+jpeg("ppl\\ConvolutionPPL.jpg", width = 850, height = 850)
+
+tmap_mode('plot') + tm_shape(vendee.sf) + 
+tm_polygons('PPL', title = "PPL", palette ="Oranges", breaks = c(0, 20, 40, 60, 80, 100, 130, 200, 300, 400)) 
+
+dev.off()

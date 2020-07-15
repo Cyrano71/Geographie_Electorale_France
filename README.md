@@ -65,7 +65,7 @@ de commune. Ainsi on peut déterminer pour chaque taille de commune le nombre de
 Le paramètre Theta est le coeur de l'étude et peut être modélisé de différentes manières. 
 
 2) Cette étude est d'abord une étude géographique et donc il faut intégrer la dimension spatiale dans les modèles, c'est pourquoi on notera dans cette étude l'utilisation :
-- du Conditional Autoregressive Model 
+- du conditional autoregressive model 
 - de l'analyse multiéchelle
 - de la matrice de covariance spatiale
 
@@ -75,13 +75,23 @@ Pour chaque modèle on trouvera un script correspondant. Le script met en forme 
 lancer l'analyse bayésienne.
 À la fin de chaque script le "mean squared predictive error (MSPE)" et le "widely applicable information criterion (WAIC)" sont calculés. 
 
-## Erreurs Prédictives Postérieures EPP
+## Posterior Predictive Loss (PPL)
 
 1) Modèle Poisson Log Linéaire
 
 Modèle classique peu performant
 
 ![alt text](ppl/PoissonLogLinearPPL.jpg)
+
+2) Modèle Convolution
+
+L'idée du modèle de convolution est d'ajouter à un modèle classqiue log lineaire deux termes supplémentaires :
+- uncorrelated heterogeneity  => V[i] ~ dnorm(0, tau.V) 
+- correlated heterogeneity => U[1:N] ~ car.normal(adj[], weights[], num[], tau.U)  
+
+Le "PPL" est meilleur par rapport à un simple Log lineaire modèle :
+
+![alt text](ppl/ConvolutionPPL.jpg)
 
 2) Modèle Latent Mixture 
 
