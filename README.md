@@ -10,7 +10,11 @@ Dans ce projet, les données utilisées pour les variables explicatives viennent
 
 https://www.insee.fr/
 
-La liste des tableaux disponibles de l'Insee est dans le fichier doc_RP.xlsx.
+La liste des tableaux de données de l'Insee peut être récupéré sur le lien suivant : 
+
+- https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=DonneesLocales&version=V0.1&provider=insee
+
+Télécharger Documentation RP pour avoir la liste des tableaux.
 
 Les tableaux qui ont été utilisés pour cette étude :
 - Population active de 15 ans ou plus par sexe, âge et type d'activité  : BTX_TD_ACT1_2012 et BTX_TD_ACT1_2016
