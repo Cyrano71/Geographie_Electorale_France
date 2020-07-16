@@ -13,9 +13,9 @@ https://www.insee.fr/
 La liste des tableaux disponibles de l'Insee est dans le fichier doc_RP.xlsx.
 
 Les tableaux qui ont été utilisés pour cette étude :
-- Population active de 15 ans ou plus par sexe, âge et type d'activité
-- Population par sexe, âge et situation quant à l'immigration
-- Population par sexe et âge regroupé
+- Population active de 15 ans ou plus par sexe, âge et type d'activité  : BTX_TD_ACT1_2012 et BTX_TD_ACT1_2016
+- Population par sexe, âge et situation quant à l'immigration : BTX_TD_IMG1A_2016 
+- Population par sexe et âge regroupé : BTX_TD_POP1A_2012 et BTX_TD_POP1A_2016
 
 Les données utilisées pour les variables dépendantes viennent de data.gouv.
 
