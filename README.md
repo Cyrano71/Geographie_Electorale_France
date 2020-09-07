@@ -17,7 +17,10 @@ Pour cela j'ai repris les modèles géostatistiques de l'épidémiologie et je l
 en utilisant comme données les ressources de l'Insee et comme forme géométrique le découpage administratif communal français issu d'OpenStreetMap
 qui se trouve sur data.gouv.
 
-Disposant de moyens limités pour faire mon analyse je me suis cantonné à l'étude du département de la Vendée. 
+Disposant de moyens limités pour faire mon analyse je me suis cantonné à l'étude du département de la Vendée et aux deux dernières éléctions présidentielles. 
+L'idée est dans ce projet de modéliser l'affrontement droite-gauche en utilisant différents modèles géostatistiques comme les modèles multiscales ou les modèles
+de convolution.
+
 Tous les graphiques qui sont sur le readme ont été réalisés grâce à la librairie tmap disponible sur R.
 
 ## Dossier data
