@@ -3,6 +3,7 @@
 ## Objet de l'analyse
 
 Je suis vraiment intéressé par la persistence de certains phénomènes politiques au plan géographique.
+
 J'ai été très influencé par le "Tableau politique de la France de l’Ouest sous la Troisième République"
 de André Siegfried.
 Dans ce livre l'auteur essaye de comprendre pourquoi l'Ouest Francais demeure un bastion de la droite royaliste
