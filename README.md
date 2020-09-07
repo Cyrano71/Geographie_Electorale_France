@@ -13,7 +13,7 @@ ou celle de l'Eglise dans cette région et essaye d'en tirer une "loi générale
 
 J'essaye de reprendre cette idée et de l'adapter à la France moderne avec les moyens statistiques dont nous disposons aujourd'hui comme les
 modèles génératifs bayésiens.
-Pour cela j'ai repris les modèles géostatistiques de l'épidémiologie et je les ai transposés à l'analyse élétorale,
+Pour cela j'ai repris les modèles géostatistiques de l'épidémiologie et je les ai transposés à l'analyse électorale,
 en utilisant comme données les ressources de l'Insee et comme forme géométrique le découpage administratif communal français issu d'OpenStreetMap
 qui se trouve sur data.gouv.
 
