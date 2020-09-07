@@ -2,7 +2,22 @@
 
 ## Objet de l'analyse
 
-Ce projet est une étude géostatistique du vote des Français en utilisant les modèles bayésiens
+Je suis vraiment intéressé par la persistence de certains phénomènes politiques au plan géographique.
+J'ai été très influencé par le "Tableau politique de la France de l’Ouest sous la Troisième République"
+de André Siegfried.
+Dans ce livre l'auteur essaye de comprendre pourquoi l'Ouest Francais demeure un bastion de la droite royaliste
+alors que le reste de la France adopte petit à petit les idées républicaines.
+Pour cela André Siegfried étudie un certain nombre d'indicateurs géographiques clés comme la structure de la propriété privée,
+ou celle de l'Eglise dans cette région et essaye d'en tirer une "loi générale".
+
+J'essaye de reprendre cette idée et de l'adapter à la France moderne avec les moyens statistiques dont nous disposons aujourd'hui comme les
+modèles génératifs bayésiens.
+Pour cela j'ai repris les modèles géostatistiques de l'épidémiologie et je les ai transposés à l'analyse élétorale,
+en utilisant comme données les ressources de l'Insee et comme forme géométrique le découpage administratif communal français issu d'OpenStreetMap
+qui se trouve sur data.gouv.
+
+Disposant de moyens limités pour faire mon analyse je me suis cantonné à l'étude du département de la Vendée. 
+Tous les graphiques qui sont sur le readme ont été réalisés grâce à la librairie tmap disponible sur R.
 
 ## Dossier data
 
