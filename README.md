@@ -2,11 +2,11 @@
 
 ## Objet de l'analyse
 
-Je suis vraiment intéressé par la persistence de certains phénomènes politiques au plan géographique.
+Je suis vraiment intéressé par la persistance de certains phénomènes politiques au plan géographique.
 
 J'ai été très influencé par le "Tableau politique de la France de l’Ouest sous la Troisième République"
 de André Siegfried.
-Dans ce livre l'auteur essaye de comprendre pourquoi l'Ouest Francais demeure un bastion de la droite royaliste
+Dans ce livre l'auteur essaye de comprendre pourquoi l'Ouest Français demeure un bastion de la droite royaliste
 alors que le reste de la France adopte petit à petit les idées républicaines.
 Pour cela André Siegfried étudie un certain nombre d'indicateurs géographiques clés comme la structure de la propriété privée,
 ou celle de l'Eglise dans cette région et essaye d'en tirer une "loi générale".
@@ -17,7 +17,7 @@ Pour cela j'ai repris les modèles géostatistiques de l'épidémiologie et je l
 en utilisant comme données les ressources de l'Insee et comme forme géométrique le découpage administratif communal français issu d'OpenStreetMap
 qui se trouve sur data.gouv.
 
-Disposant de moyens limités pour faire mon analyse je me suis cantonné à l'étude du département de la Vendée et aux deux dernières éléctions présidentielles. 
+Disposant de moyens limités pour faire mon analyse je me suis cantonné à l'étude du département de la Vendée et aux deux dernières élections présidentielles. 
 L'idée est dans ce projet de modéliser l'affrontement droite-gauche en utilisant différents modèles géostatistiques comme les modèles multiscales ou les modèles
 de convolution.
 
